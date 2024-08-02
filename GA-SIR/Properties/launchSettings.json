@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GA-SIR": {
+      "commandName": "Project",
+      "commandLineArgs": "../../../../../../../Python/sir/dados.csv"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GA-SIR", "GA-SIR\GA-SIR.csproj", "{90326B29-77BE-464C-92F2-5407750489C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GA-SIR.Test", "GA-SIR.Test\GA-SIR.Test.csproj", "{FE17309C-6A7A-4E2C-A4CB-84264E4286E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90326B29-77BE-464C-92F2-5407750489C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90326B29-77BE-464C-92F2-5407750489C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90326B29-77BE-464C-92F2-5407750489C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90326B29-77BE-464C-92F2-5407750489C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE17309C-6A7A-4E2C-A4CB-84264E4286E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE17309C-6A7A-4E2C-A4CB-84264E4286E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE17309C-6A7A-4E2C-A4CB-84264E4286E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE17309C-6A7A-4E2C-A4CB-84264E4286E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DF0918F-F1E1-4A9D-B575-08123B56EC52}
+	EndGlobalSection
+EndGlobal
