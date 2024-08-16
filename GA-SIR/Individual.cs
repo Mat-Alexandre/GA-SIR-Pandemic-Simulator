@@ -6,8 +6,7 @@ public struct Individual
     public float BetaScore { get; set; } = .0F;
     public float GammaScore { get; set; } = .0F;
     public float Score { get; set; } = .0F;
-    public int Generation { get; set; } = 0;
-    // TODO: This can be changed to array or it must be a List
+    // TODO: Can this be changed to array or it must be a List?
     public List<uint>? Susceptible { get; set; }
     public List<uint>? Infected { get; set; }
     public List<uint>? Recovered { get; set; }
@@ -30,6 +29,9 @@ public struct Individual
 
     public override string ToString()
     {
-        return $"Score={Score}, BetaScore={BetaScore}, GammaScore={GammaScore}";
+        var score = String.Format("{0:F3}", Score);
+        var beta = String.Format("{0:F2}", BetaScore);
+        var gamma = String.Format("{0:F2}", GammaScore);
+        return String.Format("Score {0, 9} | BetaScore {1, 9} | GammaScore {2, 9}", score, beta, gamma);
     }
 }
