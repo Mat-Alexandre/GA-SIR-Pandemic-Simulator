@@ -1,7 +1,5 @@
 ﻿using QuikGraph;
 using QuikGraph.Algorithms;
-using System.Diagnostics;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace GA_SIR;
 
@@ -46,6 +44,7 @@ public class GeneticAlgorithm
     /// </summary>
     public int[] RecoveredNodes { get; set; }
     public Random RandomGenerator { get; set; }
+    private static readonly object _lock = new object();
 
     public GeneticAlgorithm(
         int popSize,
@@ -88,25 +87,28 @@ public class GeneticAlgorithm
 
         // Keeping track of best solution
         Individual solution = Populations![0];
-        Fitness(ref solution, bitSize, days);
+        Fitness(ref solution, days);
         BestSolution = solution;
 
         // Iterating over the generations 
         for (int gen = 0; gen < numGenerations; gen++)
         {
-            Console.WriteLine($"========================= Generation {gen} =========================");
             // Evaluating all candidates in the population
-            for (int i = 0; i < Populations!.Count; i++)
+            Parallel.For(0, Populations.Count, (i) =>
             {
-                solution = Populations[i];
-                Fitness(ref solution, bitSize, days);
-                Populations[i] = solution;
+                Individual individual = new Individual(bitSize);
+                individual = Populations[i];
+                Fitness(ref individual, days);
+                Populations[i] = individual;
                 // Checking for new best solution
-                if (solution.Score < BestSolution.Score)
-                    BestSolution = solution;
-                Console.WriteLine($"{i,2} | Score {solution.Score,7} | BetaScore {solution.BetaScore,9} | GammaScore {solution.GammaScore,9}");
-            }
-            Console.WriteLine();
+                lock(_lock)
+                {
+                    if (individual.Score < BestSolution.Score)
+                        BestSolution = individual;
+                }
+            });
+
+            Console.WriteLine($"Generation {gen, 3}: {BestSolution}");
 
             var nextGeneration = new List<Individual>
             {
@@ -134,8 +136,6 @@ public class GeneticAlgorithm
                 nextGeneration.Add(offspring2);
             }
 
-            Console.WriteLine($"Next Gen Size: {nextGeneration.Count}");
-
             Populations = nextGeneration;
         }
 
@@ -148,9 +148,7 @@ public class GeneticAlgorithm
     {
         Populations = new List<Individual>();
         for (int i = 0; i < PopSize; i++)
-        {
             Populations.Add(new Individual(bitSize));
-        }
 
         BestSolution = Populations[0];
     }
@@ -165,7 +163,7 @@ public class GeneticAlgorithm
         individual.Susceptible = new();
         individual.Infected = new();
         individual.Recovered = new();
-
+        
         int betaToDecimal = Utils.BinaryArrayToDecimal(individual.Beta);
         var beta = Utils.Interpolate(betaToDecimal, 0, (maxValue - 1));
 
@@ -232,12 +230,6 @@ public class GeneticAlgorithm
             }
         }
         return offspring;
-    }
-
-    public void PrintGAResult()
-    {
-        Console.WriteLine("The best found solution:");
-        Console.WriteLine($"{BestSolution.Score}");
     }
 
     public (int, int) Selection()
