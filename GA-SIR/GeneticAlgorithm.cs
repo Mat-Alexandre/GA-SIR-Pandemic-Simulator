@@ -259,4 +259,17 @@ public class GeneticAlgorithm
 
         return (parent1, parent2);
     }
+
+    public void PrintGAResult()
+    {
+        Console.WriteLine($"\n============================= Last Generation ==============================");
+        Console.WriteLine($"Population-------------------------------------------------------------------");
+        
+        for (int i = 0; i < Populations!.Count; i++)
+            Console.WriteLine($"{i,2} | {Populations[i]}");
+        
+        Console.WriteLine("\nThe best found solution:");
+        Console.WriteLine($"{BestSolution.Score}");
+    }
+
 }
