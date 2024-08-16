@@ -1,4 +1,6 @@
-﻿namespace GA_SIR;
+﻿using static System.Formats.Asn1.AsnWriter;
+
+namespace GA_SIR;
 
 public class Utils
 {
@@ -113,5 +115,25 @@ public class Utils
         float sum = 0;
         diff.ForEach(x => sum += x);
         return sum / diff.Count;
+    }
+
+    public static void PrintInitialConfig(string fileName, int popSize, int generations, int bitSize, int days, float reprodutionRate, float crossoverRate, float mutationRate, uint totalNodes)
+    {
+        Console.WriteLine("============================= GENETIC ALGORITHM ============================");
+        Console.WriteLine("=================================== S.I.R ==================================");
+        Console.WriteLine($"\nOpened File? {fileName}");
+
+        Console.WriteLine($"Simulation parameters------------------------------------------------------");
+        Console.WriteLine($"Population size: {popSize}");
+        Console.WriteLine($"Number of generations: {generations}");
+        Console.WriteLine($"Chromossome bits: {bitSize}");
+        Console.WriteLine($"Simulated days: {days}");
+        Console.WriteLine($"Reprodution rate: {reprodutionRate}");
+        Console.WriteLine($"Crossover rate: {crossoverRate}");
+        Console.WriteLine($"Mutation rate: {mutationRate}");
+        Console.WriteLine($"Graph total nodes: {totalNodes}");
+        Console.WriteLine($"---------------------------------------------------------------------------");
+
+        Console.WriteLine("============================================================================");
     }
 }
