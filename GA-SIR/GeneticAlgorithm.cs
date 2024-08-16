@@ -156,13 +156,15 @@ public class GeneticAlgorithm
     }
 
     // TODO: Documentate it
-    public void Fitness(ref Individual individual, int bitSize, int days)
+    public void Fitness(ref Individual individual, int days)
     {
+        const float ONE_MILLION = 1_000_000;
+        int bitSize = individual.Gamma.Length;
+        var maxValue = (2 << bitSize);
+
         individual.Susceptible = new();
         individual.Infected = new();
         individual.Recovered = new();
-
-        var maxValue = (2 << bitSize);
 
         int betaToDecimal = Utils.BinaryArrayToDecimal(individual.Beta);
         var beta = Utils.Interpolate(betaToDecimal, 0, (maxValue - 1));
@@ -191,31 +193,13 @@ public class GeneticAlgorithm
             individual.Recovered.Add((ushort)value[2]);
         }
 
-        //Console.WriteLine("Infected per day:");
-        //foreach (var i in InfectedPerDay)
-        //{
-        //    Console.Write($"{i} ");
-        //}
-        //Console.WriteLine();
-
-        //Console.WriteLine("individual.Infected per day:");
-        //foreach (var i in individual.Infected)
-        //{
-        //    Console.Write($"{i} ");
-        //}
-        //Console.WriteLine();
-
         var betaScore = (float)Math.Round(Utils.MeanSquaredError(InfectedPerDay, individual.Infected), 5);
         individual.BetaScore = betaScore;
 
         var gammaScore = (float)Math.Round(Utils.MeanSquaredError(RecoveredPerDay, individual.Recovered), 5);
         individual.GammaScore = gammaScore;
 
-        //Console.WriteLine($"Beta score: {betaScore}");
-        //Console.WriteLine($"Gamma score: {gammaScore}");
-
         // TODO: Validate the scores (check if it is not overflowed).
-        const float ONE_MILLION = 1_000_000;
         var mean = (individual.BetaScore + individual.GammaScore) / 2;
         individual.Score = (float)Math.Round(ONE_MILLION / mean, 5);
     }
